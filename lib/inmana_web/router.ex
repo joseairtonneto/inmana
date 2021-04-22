@@ -12,7 +12,7 @@ defmodule InmanaWeb.Router do
 
     post "/restaurants", RestaurantsController, :create
 
-    post "/supplies", SuppliesController, :create
+    resources "/supplies", SuppliesController, only: [:create, :show]
   end
 
   # Enables LiveDashboard only for development
@@ -29,5 +29,7 @@ defmodule InmanaWeb.Router do
       pipe_through [:fetch_session, :protect_from_forgery]
       live_dashboard "/dashboard", metrics: InmanaWeb.Telemetry
     end
+
+    forward "/sent_emails", Bamboo.SentEmailViewerPlug
   end
 end
